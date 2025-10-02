@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import static java.net.HttpURLConnection.HTTP_CREATED;
+import static java.net.HttpURLConnection.HTTP_OK;
 
 @Service
 @AllArgsConstructor
@@ -24,5 +25,19 @@ public class FranchiseServiceImpl implements FranchiseService {
                 .build();
         FranchiseEntity newFranchise =   franchiseRepository.save(franchiseEntity);
         return ResponseEntity.status(HTTP_CREATED).body(newFranchise);
+    }
+
+    @Override
+    public ResponseEntity<?> modifyFranchise(FranchiseDto franchiseDto, Long id) {
+        FranchiseEntity franchiseEntity = franchiseRepository.findById(id).orElseThrow();
+        franchiseEntity.setName(franchiseDto.getName());
+        FranchiseEntity modifiedFranchise = franchiseRepository.save(franchiseEntity);
+        return ResponseEntity.status(HTTP_OK).body(modifiedFranchise);
+    }
+
+    @Override
+    public ResponseEntity<?> getAll() {
+        var franchises = franchiseRepository.findAll();
+        return ResponseEntity.status(HTTP_OK).body(franchises);
     }
 }

@@ -18,4 +18,15 @@ public class FranchiseController  implements FranchiseDoc {
         return franchiseService.createFranchise(franchiseDto);
 
     }
+
+    @Override
+    public ResponseEntity<?> modify(FranchiseDto franchiseDto, Long id) {
+        return franchiseService.modifyFranchise(franchiseDto, id);
+
+    }
+
+    @Override
+    public ResponseEntity<?> getAll() {
+        return franchiseService.getAll();
+    }
 }

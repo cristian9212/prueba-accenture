@@ -8,9 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 @Tag(name = "Franchise", description = "Franchise API")
@@ -25,4 +23,23 @@ public interface FranchiseDoc  {
     })
     @PostMapping
     ResponseEntity<?> create (@Valid @RequestBody FranchiseDto franchiseDto);
+
+    @Operation(summary = "Modify Franchise", description = "Modify an existing franchise")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Franchise modified successfully"),
+        @ApiResponse(responseCode = "400", description = "Invalid input data"),
+        @ApiResponse(responseCode = "404", description = "Franchise not found"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @PutMapping("/{id}")
+    ResponseEntity<?> modify (@Valid @RequestBody  FranchiseDto franchiseDto, Long id);
+
+    @Operation(summary = "Get All Franchises", description = "Retrieve all franchises")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Franchises retrieved successfully"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @GetMapping
+    ResponseEntity<?> getAll();
+
 }
