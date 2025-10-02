@@ -1,0 +1,57 @@
+### Java ###
+*.class
+*.log
+hs_err_pid*
+replay_pid*
+
+### Gradle ###
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Plugin-specific caches (opcional, pero recomendado)
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# User-specific files
+.idea/**/usage.statistics.xml
+.idea/**/dynamics.xml
+.idea/**/libraries
+
+# IntelliJ crash logs
+.idea/**/httpRequests/
+.idea/caches/
+.idea/modules.xml
+
+### OS ###
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+### Packaging ###
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
