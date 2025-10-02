@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:mysql://rds-mysql-accenture.cvkw2go0cpxv.us-east-2.rds.amazonaws.com:3306/franchise_db?useSSL=false&serverTimezone=UTC
-    username: admin
-    password: prueba123
+    username: xxxx
+    password: xxxx
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
