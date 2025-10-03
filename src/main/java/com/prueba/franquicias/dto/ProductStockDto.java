@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductStockDto {
 
-    @Min(value = 0, message = "Stock must be greater than or equal to 0")
+    @Min(value = 1, message = "Stock must be at least 1")
     private int stock;
 }
 

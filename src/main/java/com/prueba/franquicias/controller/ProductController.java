@@ -3,6 +3,7 @@ package com.prueba.franquicias.controller;
 
 import com.prueba.franquicias.controller.doc.ProductDoc;
 import com.prueba.franquicias.dto.ProductDto;
+import com.prueba.franquicias.dto.ProductStockDto;
 import com.prueba.franquicias.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,12 @@ public class ProductController implements ProductDoc {
     }
 
     @Override
-    public ResponseEntity<?> updateStock(Long id, int stock) {
-        return ResponseEntity.ok(productService.updateStock(id, stock));
+    public ResponseEntity<?> updateStock(Long id,  ProductStockDto productStockDto) {
+        return ResponseEntity.ok(productService.updateStock(id, productStockDto.getStock()));
+    }
+
+    @Override
+    public ResponseEntity<?> findMaxStockByFranchise(Long franchiseId) {
+        return ResponseEntity.ok(productService.findMaxStockByFranchise(franchiseId));
     }
 }

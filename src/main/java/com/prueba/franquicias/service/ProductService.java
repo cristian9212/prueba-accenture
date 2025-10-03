@@ -1,7 +1,7 @@
 package com.prueba.franquicias.service;
 
 import com.prueba.franquicias.dto.ProductDto;
-import com.prueba.franquicias.dto.ProductMaxStockDto;
+import com.prueba.franquicias.dto.response.TopProductDTO;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -14,6 +14,6 @@ public interface ProductService {
 
     ResponseEntity<?> updateStock(Long id, int stock);
 
-    List<ProductMaxStockDto> findMaxStockByFranchise(Long franchiseId);
+    List<TopProductDTO> findMaxStockByFranchise(Long franchiseId);
 }
 

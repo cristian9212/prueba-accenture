@@ -1,6 +1,7 @@
 package com.prueba.franquicias.controller.doc;
 
 import com.prueba.franquicias.dto.ProductDto;
+import com.prueba.franquicias.dto.ProductStockDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -39,6 +40,19 @@ public interface ProductDoc {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PutMapping("/{id}/stock")
-    ResponseEntity<?> updateStock(@PathVariable Long id, @RequestParam int stock);
+    ResponseEntity<?> updateStock(@PathVariable Long id,@Valid @RequestBody ProductStockDto productStockDto);
+
+
+    @Operation(
+            summary = "Get Top Products by Franchise",
+            description = "Retrieve the product with the highest stock for each branch within a specified franchise"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Top products retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Franchise not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @GetMapping("/max/{franchiseId}")
+    ResponseEntity<?> findMaxStockByFranchise(@PathVariable Long franchiseId);
 
 }

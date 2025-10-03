@@ -2,10 +2,11 @@ package com.prueba.franquicias.service.impl;
 
 
 import com.prueba.franquicias.dto.ProductDto;
-import com.prueba.franquicias.dto.ProductMaxStockDto;
+import com.prueba.franquicias.dto.response.TopProductDTO;
 import com.prueba.franquicias.model.BranchEntity;
 import com.prueba.franquicias.model.ProductEntity;
 import com.prueba.franquicias.repository.BranchRepository;
+import com.prueba.franquicias.repository.FranchiseRepository;
 import com.prueba.franquicias.repository.ProductRepository;
 import com.prueba.franquicias.service.ProductService;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final BranchRepository branchRepository;
+    private final FranchiseRepository franchiseRepository;
 
     @Override
     public ResponseEntity<?> create(ProductDto productDto) {
@@ -61,27 +63,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductMaxStockDto> findMaxStockByFranchise(Long franchiseId) {
-        List<BranchEntity> branches = branchRepository.findByFranchiseId(franchiseId);
-        List<ProductMaxStockDto> result = new ArrayList<>();
+    public List<TopProductDTO> findMaxStockByFranchise(Long franchiseId) {
 
-        for (BranchEntity branch : branches) {
-            List<ProductEntity> products = productRepository.findByBranchId(branch.getId());
+        branchRepository
+                .findById(franchiseId)
+                .orElseThrow(
+                        () -> new RuntimeException("Branch not found with id: " + franchiseId)
+                );
 
-            if (!products.isEmpty()) {
-                ProductEntity maxStockProduct = products.stream()
-                        .max(Comparator.comparingInt(ProductEntity::getStock))
-                        .orElseThrow();
+        return productRepository.findTopPerBranchJpql(franchiseId);
 
-                result.add(ProductMaxStockDto.builder()
-                        .branchId(branch.getId())
-                        .branchName(branch.getName())
-                        .productId(maxStockProduct.getId())
-                        .productName(maxStockProduct.getName())
-                        .stock(maxStockProduct.getStock())
-                        .build());
-            }
-        }
-        return result;
     }
 }
