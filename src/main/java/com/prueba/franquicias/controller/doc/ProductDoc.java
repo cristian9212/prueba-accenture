@@ -1,16 +1,13 @@
 package com.prueba.franquicias.controller.doc;
 
 import com.prueba.franquicias.dto.ProductDto;
-import com.prueba.franquicias.model.ProductEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Product", description = "Product API")
 @RequestMapping("/product")
@@ -24,4 +21,24 @@ public interface ProductDoc {
     })
     @PostMapping
     ResponseEntity<?> create(@Valid @RequestBody ProductDto productDto);
+
+    @Operation(summary = "Delete Product", description = "Delete a product by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Product deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Product not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @DeleteMapping("/{id}")
+    ResponseEntity<?> delete(@PathVariable Long id);
+
+    @Operation(summary = "Update Product Stock", description = "Update the stock of a product")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Stock updated successfully"),
+            @ApiResponse(responseCode = "404", description = "Product not found"),
+            @ApiResponse(responseCode = "400", description = "Invalid stock value"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @PutMapping("/{id}/stock")
+    ResponseEntity<?> updateStock(@PathVariable Long id, @RequestParam int stock);
+
 }

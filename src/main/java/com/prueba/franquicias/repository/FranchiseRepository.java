@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface FranchiseRepository extends JpaRepository <FranchiseEntity, Long> {
 
+    Optional<FranchiseEntity> findByName(String name);
+
 }

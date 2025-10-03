@@ -20,18 +20,31 @@ public class FranchiseServiceImpl implements FranchiseService {
 
     @Override
     public ResponseEntity<?> createFranchise(FranchiseDto franchiseDto) {
+
+        franchiseRepository
+                .findByName(franchiseDto.getName())
+                .ifPresent(f -> {
+                    throw new RuntimeException("Franquicia already exists");
+                });
+
         FranchiseEntity franchiseEntity = FranchiseEntity.builder()
                 .name(franchiseDto.getName())
                 .build();
-        FranchiseEntity newFranchise =   franchiseRepository.save(franchiseEntity);
+
+        FranchiseEntity newFranchise = franchiseRepository.save(franchiseEntity);
         return ResponseEntity.status(HTTP_CREATED).body(newFranchise);
     }
 
     @Override
     public ResponseEntity<?> modifyFranchise(FranchiseDto franchiseDto, Long id) {
-        FranchiseEntity franchiseEntity = franchiseRepository.findById(id).orElseThrow();
+        FranchiseEntity franchiseEntity = franchiseRepository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("Franquicia not found"));
+
         franchiseEntity.setName(franchiseDto.getName());
+
         FranchiseEntity modifiedFranchise = franchiseRepository.save(franchiseEntity);
+
         return ResponseEntity.status(HTTP_OK).body(modifiedFranchise);
     }
 

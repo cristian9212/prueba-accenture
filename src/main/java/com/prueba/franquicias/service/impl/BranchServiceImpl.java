@@ -24,26 +24,24 @@ public class BranchServiceImpl implements BranchService {
 
     @Override
     public ResponseEntity<?> createBranch(BranchDto branchDto) {
-        try {
-            FranchiseEntity franchise = franchiseRepository.findById(branchDto.getFranchiseId())
-                    .orElseThrow(() -> new RuntimeException("Franchise not found with id: " + branchDto.getFranchiseId()));
 
-            branchRepository.findByNameAndFranchiseId(branchDto.getName(), branchDto.getFranchiseId())
-                    .ifPresent(b -> {
-                        throw new RuntimeException("Branch with name '" + branchDto.getName() + "' already exists for this franchise.");
-                    });
+        FranchiseEntity franchise = franchiseRepository
+                .findById(branchDto.getFranchiseId())
+                .orElseThrow(() -> new RuntimeException("Franchise not found with id: " + branchDto.getFranchiseId()));
 
-            BranchEntity branchEntity = BranchEntity.builder()
-                    .name(branchDto.getName())
-                    .franchise(franchise)
-                    .build();
+        branchRepository.findByNameAndFranchiseId(branchDto.getName(), branchDto.getFranchiseId())
+                .ifPresent(b -> {
+                    throw new RuntimeException("Branch with name " + branchDto.getName() + " already exists for this franchise.");
+                });
 
-            BranchEntity newBranch = branchRepository.save(branchEntity);
-            return ResponseEntity.status(HttpStatus.CREATED).body(newBranch);
+        BranchEntity branchEntity = BranchEntity.builder()
+                .name(branchDto.getName())
+                .franchise(franchise)
+                .build();
 
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
+        BranchEntity newBranch = branchRepository.save(branchEntity);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(newBranch);
     }
 
     @Override
