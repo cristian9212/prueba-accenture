@@ -1,7 +1,6 @@
 package com.prueba.franquicias.repository;
 
 import com.prueba.franquicias.dto.response.TopProductDTO;
-import com.prueba.franquicias.model.BranchEntity;
 import com.prueba.franquicias.model.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

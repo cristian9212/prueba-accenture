@@ -26,8 +26,9 @@ public class ProductController implements ProductDoc {
     }
 
     @Override
-    public ResponseEntity<?> updateStock(Long id,  ProductStockDto productStockDto) {
-        return ResponseEntity.ok(productService.updateStock(id, productStockDto.getStock()));
+    public ResponseEntity<?> updateStock(Long id, ProductStockDto productStockDto) {
+        return productService.updateStock(id, productStockDto.getStock());
+
     }
 
     @Override

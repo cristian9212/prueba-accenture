@@ -12,9 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
-
-
-
 @Service
 @AllArgsConstructor
 public class BranchServiceImpl implements BranchService {
@@ -23,7 +20,7 @@ public class BranchServiceImpl implements BranchService {
     private final FranchiseRepository franchiseRepository;
 
     @Override
-    public ResponseEntity<?> createBranch(BranchDto branchDto) {
+    public ResponseEntity<BranchDto> createBranch(BranchDto branchDto) {
 
         FranchiseEntity franchise = franchiseRepository
                 .findById(branchDto.getFranchiseId())
@@ -41,7 +38,12 @@ public class BranchServiceImpl implements BranchService {
 
         BranchEntity newBranch = branchRepository.save(branchEntity);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(newBranch);
+        BranchDto responseDto = new BranchDto(
+                newBranch.getName(),
+                newBranch.getFranchise().getId()
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
     @Override

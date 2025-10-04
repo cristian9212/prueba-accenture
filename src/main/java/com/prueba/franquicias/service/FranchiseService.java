@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface FranchiseService {
 
-    ResponseEntity <?> createFranchise(FranchiseDto franchiseDto);
+    ResponseEntity <FranchiseDto> createFranchise(FranchiseDto franchiseDto);
 
     ResponseEntity<?> modifyFranchise(FranchiseDto franchiseDto, Long id);
 

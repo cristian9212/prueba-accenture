@@ -19,7 +19,7 @@ public class FranchiseServiceImpl implements FranchiseService {
 
 
     @Override
-    public ResponseEntity<?> createFranchise(FranchiseDto franchiseDto) {
+    public ResponseEntity<FranchiseDto> createFranchise(FranchiseDto franchiseDto) {
 
         franchiseRepository
                 .findByName(franchiseDto.getName())
@@ -32,7 +32,12 @@ public class FranchiseServiceImpl implements FranchiseService {
                 .build();
 
         FranchiseEntity newFranchise = franchiseRepository.save(franchiseEntity);
-        return ResponseEntity.status(HTTP_CREATED).body(newFranchise);
+
+        FranchiseDto responseDto = new FranchiseDto();
+        responseDto.setName(newFranchise.getName());
+
+
+        return ResponseEntity.status(HTTP_CREATED).body(responseDto);
     }
 
     @Override
@@ -42,11 +47,14 @@ public class FranchiseServiceImpl implements FranchiseService {
                 .orElseThrow(() -> new RuntimeException("Franquicia not found"));
 
         franchiseEntity.setName(franchiseDto.getName());
-
         FranchiseEntity modifiedFranchise = franchiseRepository.save(franchiseEntity);
 
-        return ResponseEntity.status(HTTP_OK).body(modifiedFranchise);
-    }
+        FranchiseDto dto = new FranchiseDto();
+        dto.setName(modifiedFranchise.getName());
+
+        return ResponseEntity.ok(dto);
+
+}
 
     @Override
     public ResponseEntity<?> getAll() {

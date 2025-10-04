@@ -15,4 +15,5 @@ public class FranchiseDto {
 
     @NotBlank
     private String name;
+
 }

@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface BranchService {
 
-    ResponseEntity<?> createBranch(BranchDto branchDto);
+    ResponseEntity<BranchDto> createBranch(BranchDto branchDto);
 
     ResponseEntity<?> modifyBranch(BranchDto branchDto, Long id);
 
